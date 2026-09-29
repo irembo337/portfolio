@@ -115,10 +115,24 @@
         <footer><span>© 2026 WebPortfolio</span><span>HTML · CSS · JavaScript · Vercel · Telegram Bots</span></footer>
     <div class="toast" id="toast">Discord был скопирован в буфер обмена</div>
     <script>
-        function showDiscord() {
+        async function showDiscord() {
             const toast = document.getElementById('toast');
-            navigator.clipboard.writeText('naxock').catch(function () {});
-            toast.textContent = 'Discord был скопирован в буфер обмена';
+            const discord = 'iremb0';
+
+            try {
+                await navigator.clipboard.writeText(discord);
+            } catch (error) {
+                const textarea = document.createElement('textarea');
+                textarea.value = discord;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                textarea.remove();
+            }
+
+            toast.textContent = 'Discord iremb0 скопирован в буфер обмена';
             toast.classList.add('show');
             clearTimeout(window.toastTimer);
             window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
