@@ -95,32 +95,121 @@
         .contact-actions .btn { font-weight: 900; }
         .toast { position: fixed; left: 50%; bottom: 26px; z-index: 50; transform: translateX(-50%) translateY(10px); padding: 14px 20px; border-radius: 14px; background: #f5f5f5; color: #08080d; font-weight: 900; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        body.language-pending { overflow: hidden; }
+        .language-gate { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: rgba(5,5,8,.88); backdrop-filter: blur(22px); transition: opacity .25s, visibility .25s; }
+        .language-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .language-card { width: min(520px, 100%); padding: 40px; border: 1px solid rgba(255,255,255,.14); border-radius: 28px; text-align: center; background: linear-gradient(145deg, rgba(24,24,38,.98), rgba(10,10,16,.98)); box-shadow: 0 36px 100px rgba(0,0,0,.55); }
+        .language-card .logo { display: inline-block; margin-bottom: 30px; }
+        .language-card h2 { font-size: clamp(32px, 6vw, 48px); margin-bottom: 12px; }
+        .language-card p { color: #aaaabd; line-height: 1.7; margin-bottom: 28px; }
+        .language-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .language-option { padding: 18px; border: 1px solid rgba(255,255,255,.14); border-radius: 16px; background: rgba(255,255,255,.06); color: #fff; font: 800 16px Inter, Arial, sans-serif; cursor: pointer; transition: transform .2s, background .2s, border-color .2s; }
+        .language-option:hover { transform: translateY(-2px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
         footer { max-width: 1180px; margin: 0 auto; padding: 34px 24px 48px; color: #8c8c9d; font-size: 14px; display: flex; justify-content: space-between; gap: 20px; }
         @media (max-width: 920px) { .hero { grid-template-columns: 1fr; padding-top: 72px; } .projects { grid-template-columns: 1fr; } .skills { grid-template-columns: repeat(2, 1fr); } .contact { flex-direction: column; align-items: flex-start; } }
-        @media (max-width: 620px) { nav, footer { flex-direction: column; align-items: flex-start; } .nav-links { flex-wrap: wrap; } .hero { padding: 56px 18px 42px; } section { padding: 46px 18px; } .section-head { flex-direction: column; align-items: flex-start; } .stats, .skills { grid-template-columns: 1fr; } .contact { padding: 28px; } }
+        @media (max-width: 620px) { nav, footer { flex-direction: column; align-items: flex-start; } .nav-links { flex-wrap: wrap; } .hero { padding: 56px 18px 42px; } section { padding: 46px 18px; } .section-head { flex-direction: column; align-items: flex-start; } .stats, .skills, .language-options { grid-template-columns: 1fr; } .contact { padding: 28px; } .language-card { padding: 30px 22px; } }
     </style>
 </head>
-<body>
+<body class="language-pending">
+    <div class="language-gate" id="languageGate" role="dialog" aria-modal="true" aria-labelledby="languageTitle">
+        <div class="language-card">
+            <div class="logo">Dev<span>Portfolio</span></div>
+            <h2 id="languageTitle">Выберите язык</h2>
+            <p>Choose your language</p>
+            <div class="language-options">
+                <button class="language-option" type="button" onclick="chooseLanguage('ru')">Русский</button>
+                <button class="language-option" type="button" onclick="chooseLanguage('en')">English</button>
+            </div>
+        </div>
+    </div>
     <div class="noise"></div>
-    <header><nav><a href="#top" class="logo">Dev<span>Portfolio</span></a><div class="nav-links"><a href="#projects">Проекты</a><a href="#video">Видео</a><a href="#skills">Навыки</a><a href="#contact">Контакты</a></div></nav></header>
+    <header><nav><a href="#top" class="logo">Dev<span>Portfolio</span></a><div class="nav-links"><a href="#projects" data-i18n="nav.projects">Проекты</a><a href="#video" data-i18n="nav.video">Видео</a><a href="#skills" data-i18n="nav.skills">Навыки</a><a href="#contact" data-i18n="nav.contact">Контакты</a></div></nav></header>
     <main id="top">
         <div class="hero">
-            <div><div class="badge"><span class="dot"></span> Доступен для заказов</div><h1>Создаю продукты <strong>под ключ</strong></h1><p>Разрабатываю сайты, Telegram-ботов, external-читы, античит-системы и моды для игр на Unity. Создавал читы для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.</p><div class="actions"><a class="btn btn-primary" href="#projects">Смотреть проекты</a><a class="btn" href="#contact">Связаться</a></div></div>
+            <div><div class="badge"><span class="dot"></span><span data-i18n="hero.badge">Доступен для заказов</span></div><h1><span data-i18n="hero.title">Создаю продукты</span> <strong data-i18n="hero.accent">под ключ</strong></h1><p data-i18n="hero.description">Разрабатываю сайты, Telegram-ботов, external-читы, античит-системы и моды для игр на Unity. Создавал читы для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.</p><div class="actions"><a class="btn btn-primary" href="#projects" data-i18n="hero.projects">Смотреть проекты</a><a class="btn" href="#contact" data-i18n="hero.contact">Связаться</a></div></div>
             <div class="hero-card"><div class="hero-card-inner"><div class="terminal"><div class="terminal-head"><i></i><i></i><i></i></div><div class="terminal-code">build responsive-ui<br>build telegram-bot<br>develop external-tools<br>engineer anti-cheat<br>create unity-mods<br>status: online</div></div><div class="stats"><div class="stat"><strong>R6S</strong><span>external tools</span></div><div class="stat"><strong>Unity</strong><span>game mods</span></div><div class="stat"><strong>AC</strong><span>anti-cheat</span></div></div></div></div>
         </div>
-        <section id="projects"><div class="section-head"><h2>Мои проекты</h2><p>Каждая карточка ведёт на опубликованный сайт. Нажми на ссылку, чтобы открыть проект в новой вкладке.</p></div><div class="projects">
-            <article class="project"><div class="project-visual preview-sole"><div class="preview-content"><div class="preview-kicker">SS 2026 Collection</div><div class="preview-title">Step into luxury streetwear</div><div class="preview-text">Премиальный магазин оригинальной брендовой обуви.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Fashion e-commerce</div><h3>Sole Atelier</h3><p>Премиальный магазин брендовой обуви с каталогом, hero-блоком и современным визуальным стилем.</p><a class="project-link" href="https://soleateiler.vercel.app" target="_blank" rel="noopener">soleateiler.vercel.app <span>↗</span></a></div></article>
-            <article class="project"><div class="project-visual preview-fish"><div class="preview-content"><div class="preview-title">Спортивное <span class="blue">снаряжение</span> для рыбалки</div><div class="preview-text">Спиннинги, катушки, приманки и всё необходимое для успешной рыбалки.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Fishing store</div><h3>Fish Master</h3><p>Сайт для рыбалки и продажи спиннингов: карточки товаров, тёмная тема и тематический дизайн.</p><a class="project-link" href="https://spinning-two.vercel.app" target="_blank" rel="noopener">spinning-two.vercel.app <span>↗</span></a></div></article>
-            <article class="project"><div class="project-visual preview-needle"><div class="preview-content"><div class="preview-kicker">Tattoo studio / Moscow</div><div class="preview-title">Ink with character</div><div class="preview-text">Авторские татуировки, стерильная работа, сильные эскизы.</div></div></div><div class="project-body"><div class="tag">Tattoo studio</div><h3>Black Needle</h3><p>Брутальный сайт тату-салона с услугами, портфолио, ценами, отзывами и формой записи.</p><a class="project-link" href="https://black-needle-steel.vercel.app" target="_blank" rel="noopener">black-needle-steel.vercel.app <span>↗</span></a></div></article>
-            <article class="project"><div class="project-visual preview-bot"><div class="preview-content"><div class="preview-kicker">Telegram Bot</div><div class="preview-title">Боты, которые работают за тебя</div><div class="preview-text">Сбор и AI-обработка новостей, заказы, рассылки и интеграции с API.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Telegram bots</div><h3>News &amp; Order Bots</h3><p>Пишу Telegram-ботов: агрегатор новостей Минска с ИИ-постами и кнопками (канал @MinskStart), боты для заказов и автоматизации.</p><a class="project-link" href="https://t.me/MinskStart" target="_blank" rel="noopener">t.me/MinskStart <span>↗</span></a></div></article>
+        <section id="projects"><div class="section-head"><h2 data-i18n="projects.title">Мои проекты</h2><p data-i18n="projects.description">Каждая карточка ведёт на опубликованный сайт. Нажми на ссылку, чтобы открыть проект в новой вкладке.</p></div><div class="projects">
+            <article class="project"><div class="project-visual preview-sole"><div class="preview-content"><div class="preview-kicker">SS 2026 Collection</div><div class="preview-title">Step into luxury streetwear</div><div class="preview-text" data-i18n="sole.preview">Премиальный магазин оригинальной брендовой обуви.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Fashion e-commerce</div><h3>Sole Atelier</h3><p data-i18n="sole.description">Премиальный магазин брендовой обуви с каталогом, hero-блоком и современным визуальным стилем.</p><a class="project-link" href="https://soleateiler.vercel.app" target="_blank" rel="noopener">soleateiler.vercel.app <span>↗</span></a></div></article>
+            <article class="project"><div class="project-visual preview-fish"><div class="preview-content"><div class="preview-title" data-i18n-html="fish.title">Спортивное <span class="blue">снаряжение</span> для рыбалки</div><div class="preview-text" data-i18n="fish.preview">Спиннинги, катушки, приманки и всё необходимое для успешной рыбалки.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Fishing store</div><h3>Fish Master</h3><p data-i18n="fish.description">Сайт для рыбалки и продажи спиннингов: карточки товаров, тёмная тема и тематический дизайн.</p><a class="project-link" href="https://spinning-two.vercel.app" target="_blank" rel="noopener">spinning-two.vercel.app <span>↗</span></a></div></article>
+            <article class="project"><div class="project-visual preview-needle"><div class="preview-content"><div class="preview-kicker">Tattoo studio / Moscow</div><div class="preview-title">Ink with character</div><div class="preview-text" data-i18n="needle.preview">Авторские татуировки, стерильная работа, сильные эскизы.</div></div></div><div class="project-body"><div class="tag">Tattoo studio</div><h3>Black Needle</h3><p data-i18n="needle.description">Брутальный сайт тату-салона с услугами, портфолио, ценами, отзывами и формой записи.</p><a class="project-link" href="https://black-needle-steel.vercel.app" target="_blank" rel="noopener">black-needle-steel.vercel.app <span>↗</span></a></div></article>
+            <article class="project"><div class="project-visual preview-bot"><div class="preview-content"><div class="preview-kicker">Telegram Bot</div><div class="preview-title" data-i18n="bots.title">Боты, которые работают за тебя</div><div class="preview-text" data-i18n="bots.preview">Сбор и AI-обработка новостей, заказы, рассылки и интеграции с API.</div><div class="preview-buttons"><i></i><i></i></div></div></div><div class="project-body"><div class="tag">Telegram bots</div><h3>News &amp; Order Bots</h3><p data-i18n="bots.description">Пишу Telegram-ботов: агрегатор новостей Минска с ИИ-постами и кнопками (канал @MinskStart), боты для заказов и автоматизации.</p><a class="project-link" href="https://t.me/MinskStart" target="_blank" rel="noopener">t.me/MinskStart <span>↗</span></a></div></article>
         </div></section>
-        <section id="video"><div class="section-head"><h2>Чит для Rainbow Six Siege</h2><p>Видео с демонстрацией моего external-чита в работе.</p></div><div class="video-showcase"><video controls preload="metadata" playsinline poster="assets/r6-external-poster.jpg"><source src="assets/r6-external.mp4" type="video/mp4">Ваш браузер не поддерживает воспроизведение видео.</video><div class="video-caption"><h3>R6 External</h3><p>Пример разработанного мной external-чита для Rainbow Six Siege.</p></div></div></section>
-        <section id="skills"><div class="section-head"><h2>Что умею</h2><p>Работаю с веб-разработкой, автоматизацией, читами, модами и античитами — от интерфейса до низкоуровневой логики.</p></div><div class="skills"><div class="skill"><strong>Лендинги</strong><span>Одностраничные сайты для услуг, заявок и презентаций.</span></div><div class="skill"><strong>Каталоги</strong><span>Карточки товаров, категории, цены, кнопки и адаптив.</span></div><div class="skill"><strong>Дизайн</strong><span>Подбор стиля, цветов, шрифтов и визуального настроения.</span></div><div class="skill"><strong>Telegram-боты</strong><span>Боты для новостей, заказов, рассылок и автоматизации с API и ИИ.</span></div><div class="skill"><strong>External-читы</strong><span>Разработка external-читов для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.</span></div><div class="skill"><strong>Античит-системы</strong><span>Проектирование и разработка механизмов обнаружения читов и защиты игровых проектов.</span></div><div class="skill"><strong>Моды для Unity</strong><span>Создание модификаций, игровых механик и расширений для проектов на Unity.</span></div></div></section>
-        <section id="contact"><div class="contact"><div><h2>Есть проект?</h2><p>Напиши мне, если нужен сайт, Telegram-бот, игровой инструмент, мод для Unity или античит-система. Обсудим задачу и соберём рабочее решение.</p></div><div class="contact-actions"><a class="btn btn-primary" href="https://t.me/irembo0" target="_blank" rel="noopener">Написать в Telegram</a><button class="btn btn-primary" type="button" onclick="showDiscord()">Написать в Discord</button></div></div></section>
+        <section id="video"><div class="section-head"><h2 data-i18n="video.title">Чит для Rainbow Six Siege</h2><p data-i18n="video.description">Видео с демонстрацией моего external-чита в работе.</p></div><div class="video-showcase"><video controls preload="metadata" playsinline poster="assets/r6-external-poster.jpg"><source src="assets/r6-external.mp4" type="video/mp4"><span data-i18n="video.fallback">Ваш браузер не поддерживает воспроизведение видео.</span></video><div class="video-caption"><h3>R6 External</h3><p data-i18n="video.caption">Пример разработанного мной external-чита для Rainbow Six Siege.</p></div></div></section>
+        <section id="skills"><div class="section-head"><h2 data-i18n="skills.title">Что умею</h2><p data-i18n="skills.description">Работаю с веб-разработкой, автоматизацией, читами, модами и античитами — от интерфейса до низкоуровневой логики.</p></div><div class="skills"><div class="skill"><strong data-i18n="skills.landings">Лендинги</strong><span data-i18n="skills.landingsText">Одностраничные сайты для услуг, заявок и презентаций.</span></div><div class="skill"><strong data-i18n="skills.catalogs">Каталоги</strong><span data-i18n="skills.catalogsText">Карточки товаров, категории, цены, кнопки и адаптив.</span></div><div class="skill"><strong data-i18n="skills.design">Дизайн</strong><span data-i18n="skills.designText">Подбор стиля, цветов, шрифтов и визуального настроения.</span></div><div class="skill"><strong data-i18n="skills.bots">Telegram-боты</strong><span data-i18n="skills.botsText">Боты для новостей, заказов, рассылок и автоматизации с API и ИИ.</span></div><div class="skill"><strong data-i18n="skills.cheats">External-читы</strong><span data-i18n="skills.cheatsText">Разработка external-читов для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.</span></div><div class="skill"><strong data-i18n="skills.anticheat">Античит-системы</strong><span data-i18n="skills.anticheatText">Проектирование и разработка механизмов обнаружения читов и защиты игровых проектов.</span></div><div class="skill"><strong data-i18n="skills.unity">Моды для Unity</strong><span data-i18n="skills.unityText">Создание модификаций, игровых механик и расширений для проектов на Unity.</span></div></div></section>
+        <section id="contact"><div class="contact"><div><h2 data-i18n="contact.title">Есть проект?</h2><p data-i18n="contact.description">Напиши мне, если нужен сайт, Telegram-бот, игровой инструмент, мод для Unity или античит-система. Обсудим задачу и соберём рабочее решение.</p></div><div class="contact-actions"><a class="btn btn-primary" href="https://t.me/irembo0" target="_blank" rel="noopener" data-i18n="contact.telegram">Написать в Telegram</a><button class="btn btn-primary" type="button" onclick="showDiscord()" data-i18n="contact.discord">Написать в Discord</button></div></div></section>
     </main>
-        <footer><span>© 2026 DevPortfolio</span><span>Web · Telegram Bots · External Tools · Unity Mods · Anti-Cheat</span></footer>
-    <div class="toast" id="toast">Discord был скопирован в буфер обмена</div>
+    <footer><span>© 2026 DevPortfolio</span><span>Web · Telegram Bots · External Tools · Unity Mods · Anti-Cheat</span></footer>
+    <div class="toast" id="toast" data-i18n="toast.default">Discord был скопирован в буфер обмена</div>
     <script>
+        const translations = {
+            ru: {
+                "nav.projects": "Проекты", "nav.video": "Видео", "nav.skills": "Навыки", "nav.contact": "Контакты",
+                "hero.badge": "Доступен для заказов", "hero.title": "Создаю продукты", "hero.accent": "под ключ",
+                "hero.description": "Разрабатываю сайты, Telegram-ботов, external-читы, античит-системы и моды для игр на Unity. Создавал читы для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.",
+                "hero.projects": "Смотреть проекты", "hero.contact": "Связаться",
+                "projects.title": "Мои проекты", "projects.description": "Каждая карточка ведёт на опубликованный сайт. Нажми на ссылку, чтобы открыть проект в новой вкладке.",
+                "sole.preview": "Премиальный магазин оригинальной брендовой обуви.", "sole.description": "Премиальный магазин брендовой обуви с каталогом, hero-блоком и современным визуальным стилем.",
+                "fish.title": "Спортивное <span class=\"blue\">снаряжение</span> для рыбалки", "fish.preview": "Спиннинги, катушки, приманки и всё необходимое для успешной рыбалки.", "fish.description": "Сайт для рыбалки и продажи спиннингов: карточки товаров, тёмная тема и тематический дизайн.",
+                "needle.preview": "Авторские татуировки, стерильная работа, сильные эскизы.", "needle.description": "Брутальный сайт тату-салона с услугами, портфолио, ценами, отзывами и формой записи.",
+                "bots.title": "Боты, которые работают за тебя", "bots.preview": "Сбор и AI-обработка новостей, заказы, рассылки и интеграции с API.", "bots.description": "Пишу Telegram-ботов: агрегатор новостей Минска с ИИ-постами и кнопками (канал @MinskStart), боты для заказов и автоматизации.",
+                "video.title": "Чит для Rainbow Six Siege", "video.description": "Видео с демонстрацией моего external-чита в работе.", "video.fallback": "Ваш браузер не поддерживает воспроизведение видео.", "video.caption": "Пример разработанного мной external-чита для Rainbow Six Siege.",
+                "skills.title": "Что умею", "skills.description": "Работаю с веб-разработкой, автоматизацией, читами, модами и античитами — от интерфейса до низкоуровневой логики.",
+                "skills.landings": "Лендинги", "skills.landingsText": "Одностраничные сайты для услуг, заявок и презентаций.",
+                "skills.catalogs": "Каталоги", "skills.catalogsText": "Карточки товаров, категории, цены, кнопки и адаптив.",
+                "skills.design": "Дизайн", "skills.designText": "Подбор стиля, цветов, шрифтов и визуального настроения.",
+                "skills.bots": "Telegram-боты", "skills.botsText": "Боты для новостей, заказов, рассылок и автоматизации с API и ИИ.",
+                "skills.cheats": "External-читы", "skills.cheatsText": "Разработка external-читов для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.",
+                "skills.anticheat": "Античит-системы", "skills.anticheatText": "Проектирование и разработка механизмов обнаружения читов и защиты игровых проектов.",
+                "skills.unity": "Моды для Unity", "skills.unityText": "Создание модификаций, игровых механик и расширений для проектов на Unity.",
+                "contact.title": "Есть проект?", "contact.description": "Напиши мне, если нужен сайт, Telegram-бот, чит, мод для Unity или античит-система. Обсудим задачу и соберём рабочее решение.",
+                "contact.telegram": "Написать в Telegram", "contact.discord": "Написать в Discord", "toast.default": "Discord был скопирован в буфер обмена", "toast.copied": "Discord iremb0 скопирован в буфер обмена"
+            },
+            en: {
+                "nav.projects": "Projects", "nav.video": "Video", "nav.skills": "Skills", "nav.contact": "Contact",
+                "hero.badge": "Available for projects", "hero.title": "I build products", "hero.accent": "end to end",
+                "hero.description": "I develop websites, Telegram bots, external cheats, anti-cheat systems, and mods for Unity games. I have created cheats for Rainbow Six Siege, Counter-Strike 2, BONELAB, and other games.",
+                "hero.projects": "View projects", "hero.contact": "Contact me",
+                "projects.title": "My projects", "projects.description": "Each card links to a published website. Open a project in a new tab to see it live.",
+                "sole.preview": "A premium store for authentic designer footwear.", "sole.description": "A premium designer footwear store with a product catalog, hero section, and modern visual direction.",
+                "fish.title": "Performance <span class=\"blue\">fishing gear</span>", "fish.preview": "Rods, reels, lures, and everything needed for a successful trip.", "fish.description": "A fishing equipment storefront with product cards, a dark theme, and a focused visual identity.",
+                "needle.preview": "Custom tattoos, sterile work, and bold original designs.", "needle.description": "A bold tattoo studio website with services, portfolio, pricing, testimonials, and a booking form.",
+                "bots.title": "Bots that work for you", "bots.preview": "AI-assisted news processing, orders, broadcasts, and API integrations.", "bots.description": "I build Telegram bots: a Minsk news aggregator with AI-generated posts and controls (@MinskStart), plus bots for orders and automation.",
+                "video.title": "Rainbow Six Siege Cheat", "video.description": "A live demonstration of my external cheat.", "video.fallback": "Your browser does not support video playback.", "video.caption": "An example of an external cheat I developed for Rainbow Six Siege.",
+                "skills.title": "What I do", "skills.description": "I work across web development, automation, cheats, mods, and anti-cheat systems — from interfaces to low-level logic.",
+                "skills.landings": "Landing pages", "skills.landingsText": "Single-page websites for services, lead generation, and presentations.",
+                "skills.catalogs": "Catalogs", "skills.catalogsText": "Product cards, categories, pricing, calls to action, and responsive layouts.",
+                "skills.design": "Design", "skills.designText": "Visual direction, color systems, typography, and atmosphere.",
+                "skills.bots": "Telegram bots", "skills.botsText": "Bots for news, orders, broadcasts, and automation with APIs and AI.",
+                "skills.cheats": "External cheats", "skills.cheatsText": "External cheat development for Rainbow Six Siege, Counter-Strike 2, BONELAB, and other games.",
+                "skills.anticheat": "Anti-cheat systems", "skills.anticheatText": "Design and development of cheat detection mechanisms and protection for game projects.",
+                "skills.unity": "Unity mods", "skills.unityText": "Mods, gameplay mechanics, and extensions for Unity projects.",
+                "contact.title": "Have a project?", "contact.description": "Message me if you need a website, Telegram bot, cheat, Unity mod, or anti-cheat system. We can define the task and build a working product.",
+                "contact.telegram": "Message on Telegram", "contact.discord": "Message on Discord", "toast.default": "Discord copied to clipboard", "toast.copied": "Discord iremb0 copied to clipboard"
+            }
+        };
+
+        let currentLanguage = 'ru';
+
+        function applyLanguage(language) {
+            const dictionary = translations[language];
+            currentLanguage = language;
+            document.documentElement.lang = language;
+            document.title = language === 'ru' ? 'Портфолио — Web & Game Development' : 'Portfolio — Web & Game Development';
+            document.querySelectorAll('[data-i18n]').forEach((element) => {
+                element.textContent = dictionary[element.dataset.i18n];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+                element.innerHTML = dictionary[element.dataset.i18nHtml];
+            });
+        }
+
+        function chooseLanguage(language) {
+            applyLanguage(language);
+            document.getElementById('languageGate').classList.add('hidden');
+            document.body.classList.remove('language-pending');
+        }
+
         async function showDiscord() {
             const toast = document.getElementById('toast');
             const discord = 'iremb0';
@@ -138,7 +227,7 @@
                 textarea.remove();
             }
 
-            toast.textContent = 'Discord iremb0 скопирован в буфер обмена';
+            toast.textContent = translations[currentLanguage]['toast.copied'];
             toast.classList.add('show');
             clearTimeout(window.toastTimer);
             window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
