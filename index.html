@@ -21,8 +21,10 @@
         nav { max-width: 1180px; margin: 0 auto; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
         .logo { font-weight: 900; letter-spacing: -.04em; font-size: 22px; }
         .logo span { color: #8ea2ff; }
-        .nav-links { display: flex; gap: 18px; color: #b9b9c8; font-size: 14px; }
+        .nav-links { display: flex; align-items: center; gap: 18px; color: #b9b9c8; font-size: 14px; }
         .nav-links a:hover { color: #fff; }
+        .language-switch { padding: 8px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(255,255,255,.06); color: #d7d7e2; font: 700 13px Inter, Arial, sans-serif; cursor: pointer; transition: color .2s, background .2s, border-color .2s; }
+        .language-switch:hover { color: #fff; background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.3); }
         .hero { max-width: 1180px; margin: 0 auto; padding: 104px 24px 64px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
         .badge { display: inline-flex; width: fit-content; gap: 10px; align-items: center; padding: 9px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; background: rgba(255,255,255,.05); color: #c9c9d6; font-size: 13px; margin-bottom: 24px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background: #6eff9a; box-shadow: 0 0 18px #6eff9a; }
@@ -123,7 +125,7 @@
         </div>
     </div>
     <div class="noise"></div>
-    <header><nav><a href="#top" class="logo">Dev<span>Portfolio</span></a><div class="nav-links"><a href="#projects" data-i18n="nav.projects">Проекты</a><a href="#video" data-i18n="nav.video">Видео</a><a href="#skills" data-i18n="nav.skills">Навыки</a><a href="#contact" data-i18n="nav.contact">Контакты</a></div></nav></header>
+    <header><nav><a href="#top" class="logo">Dev<span>Portfolio</span></a><div class="nav-links"><a href="#projects" data-i18n="nav.projects">Проекты</a><a href="#video" data-i18n="nav.video">Видео</a><a href="#skills" data-i18n="nav.skills">Навыки</a><a href="#contact" data-i18n="nav.contact">Контакты</a><button class="language-switch" type="button" onclick="showLanguageGate()" data-i18n="nav.language">Сменить язык</button></div></nav></header>
     <main id="top">
         <div class="hero">
             <div><div class="badge"><span class="dot"></span><span data-i18n="hero.badge">Доступен для заказов</span></div><h1><span data-i18n="hero.title">Создаю продукты</span> <strong data-i18n="hero.accent">под ключ</strong></h1><p data-i18n="hero.description">Разрабатываю сайты, Telegram-ботов, external-читы, античит-системы и моды для игр на Unity. Создавал читы для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.</p><div class="actions"><a class="btn btn-primary" href="#projects" data-i18n="hero.projects">Смотреть проекты</a><a class="btn" href="#contact" data-i18n="hero.contact">Связаться</a></div></div>
@@ -144,7 +146,7 @@
     <script>
         const translations = {
             ru: {
-                "nav.projects": "Проекты", "nav.video": "Видео", "nav.skills": "Навыки", "nav.contact": "Контакты",
+                "nav.projects": "Проекты", "nav.video": "Видео", "nav.skills": "Навыки", "nav.contact": "Контакты", "nav.language": "Сменить язык",
                 "hero.badge": "Доступен для заказов", "hero.title": "Создаю продукты", "hero.accent": "под ключ",
                 "hero.description": "Разрабатываю сайты, Telegram-ботов, external-читы, античит-системы и моды для игр на Unity. Создавал читы для Rainbow Six Siege, Counter-Strike 2, BONELAB и других игр.",
                 "hero.projects": "Смотреть проекты", "hero.contact": "Связаться",
@@ -166,7 +168,7 @@
                 "contact.telegram": "Написать в Telegram", "contact.discord": "Написать в Discord", "toast.default": "Discord был скопирован в буфер обмена", "toast.copied": "Discord iremb0 скопирован в буфер обмена"
             },
             en: {
-                "nav.projects": "Projects", "nav.video": "Video", "nav.skills": "Skills", "nav.contact": "Contact",
+                "nav.projects": "Projects", "nav.video": "Video", "nav.skills": "Skills", "nav.contact": "Contact", "nav.language": "Change language",
                 "hero.badge": "Available for projects", "hero.title": "I build products", "hero.accent": "end to end",
                 "hero.description": "I develop websites, Telegram bots, external cheats, anti-cheat systems, and mods for Unity games. I have created cheats for Rainbow Six Siege, Counter-Strike 2, BONELAB, and other games.",
                 "hero.projects": "View projects", "hero.contact": "Contact me",
@@ -208,6 +210,11 @@
             applyLanguage(language);
             document.getElementById('languageGate').classList.add('hidden');
             document.body.classList.remove('language-pending');
+        }
+
+        function showLanguageGate() {
+            document.getElementById('languageGate').classList.remove('hidden');
+            document.body.classList.add('language-pending');
         }
 
         async function showDiscord() {
